@@ -80,29 +80,13 @@ namespace pmd2mqoGUI
 			infoBox.Enabled = false;
 		}
 		
-		//Modified from original code
-		bool getInfo(){
-            using (FileStream pmdFs = new FileStream(fileEdit.Text, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                using (BinaryReader pmd = new BinaryReader(pmdFs))
-                {
-                    if (pmd2mqo.Pmd2mqo.readMultibyte(pmd, 3) != "Pmd") return false;// error_NoPMD();
-                    float pmdVer = pmd.ReadSingle();
-                    string modelName = pmd2mqo.Pmd2mqo.readMultibyte(pmd, 20);
-                    string modelComment = pmd2mqo.Pmd2mqo.readMultibyte(pmd, 256);
-
-                    nameText.Text = modelName;
-                    commentText.Text = modelComment;
-                }
-            }
-            return true;
-		}
-		
 		void ConvertButtonClick(object sender, EventArgs e)
 		{
 			convertButton.Enabled = false;
 			processIndicator.Visible = true;
-			if( getInfo() ){ 
+			if( pmd2mqo.Pmd2mqo.getInfo(fileEdit.Text, out modelName, out modelComment) ){ 
+				nameText.Text = modelName;
+				commentText.Text = modelComment;
 				infoBox.Enabled = true;
 				backgroundWorker.RunWorkerAsync();
 			} 
