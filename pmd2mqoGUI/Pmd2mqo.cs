@@ -1,6 +1,10 @@
-﻿/*
+/*
  * Original source code link:
  * https://onedrive.live.com/?cid=9DA0FA00AC5A8258&id=9DA0FA00AC5A8258!337
+ * 
+ * Modified by:
+ * DeXPeriX a.k.a. Dmitry Hrabrov
+ * http://dexperix.net
  */
 
 using System;
@@ -97,6 +101,22 @@ namespace pmd2mqo
         {
             return sjis.GetString(br.ReadBytes(num).TakeWhile(c => c != 0).ToArray());
         }
+        
+        static public bool getInfo(string pmdFile, out string modelName, out string modelComment){
+        	modelName = "";
+        	modelComment = "";
+            using (FileStream pmdFs = new FileStream(pmdFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (BinaryReader pmd = new BinaryReader(pmdFs))
+                {
+                    if (readMultibyte(pmd, 3) != "Pmd") return false;// error_NoPMD();
+                    float pmdVer = pmd.ReadSingle();
+                    modelName = readMultibyte(pmd, 20);
+                    modelComment = readMultibyte(pmd, 256);
+                }
+            }
+            return true;
+		}
 
         static public bool pmd2mqo(string pmdFile, string outFile, float scale = 1)
         {
@@ -254,9 +274,16 @@ namespace pmd2mqo
         {
             string str = String.Format("\"{0}\" col({1,0:F} {2,0:F} {3,0:F} {4,0:F}) dif({5,0:F}) amb({6,0:F}) emi({7,0:F}) spc({8,0:F}) power({9,0:F})",
                 matName, r, g, b, a, dif, amb, emi, spc, power);
+        	string newtex = tex;
+        	string[] tmptex;
+        	string[] stringSeparators = new string[] {"*"};
             if (tex != "")
             {
-                str += " tex(\"" + tex + "\")";
+            	if( newtex.Contains("*") ){
+            		tmptex = newtex.Split(stringSeparators, StringSplitOptions.None);
+            		if( tmptex.Length > 0 ) newtex = tmptex[0];
+            	}
+                str += " tex(\"" + newtex + "\")";
             }
             return str;
         }
