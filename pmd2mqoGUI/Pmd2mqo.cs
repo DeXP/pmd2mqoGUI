@@ -20,61 +20,6 @@ namespace pmd2mqo
     {
         static Encoding sjis = Encoding.GetEncoding("Shift_JIS");
 
-        /*static void usage()
-        {
-            Console.WriteLine("Usage: pmd2mqo [/s scale] input.pmd ...");
-            Console.WriteLine("  /s scale: Scaling (default = 10.0)");
-            Console.WriteLine("注意: 出力後のmqoファイルは必ずMetasequoiaで読み込んで「近接する頂点をくっつける」などの加工を行うこと");
-            Environment.Exit(-1);
-        }
-
-        static void Main(string[] args)
-        {
-            List<string> filename = new List<string>();
-            float scale = 10;
-
-            Regex ext = new Regex(@"\.pmd$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            string[] _args = Utilities.Argument.ExpandWildcards(args);
-            bool getScale = false;
-            foreach (string s in _args)
-            {
-                if (getScale)
-                {
-                    try
-                    {
-                        scale = float.Parse(s);
-                    }
-                    catch
-                    {
-                        Console.Error.WriteLine("警告: /s の後は数値である必要があります");
-                    }
-                    getScale = false;
-                }
-                else
-                {
-                    Match m = ext.Match(s);
-                    if (m.Success)
-                    {
-                        filename.Add(s);
-                    }
-                    else if (s == "/s")
-                    {
-                        getScale = true;
-                    }
-                }
-            }
-            if (filename.Count == 0)
-            {
-                usage();
-            }
-            else
-            {
-                foreach (string s in filename) pmd2mqo_cui(s, scale);
-                Console.WriteLine("注意: 出力後のmqoファイルは必ずMetasequoiaで読み込んで「近接する頂点をくっつける」などの加工を行うこと");
-            }
-
-        }*/
-
         static public bool pmd2mqo_cui(string pmdFile, float scale)
         {
         	Regex ext_pmd = new Regex(@"\.pmd$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -121,8 +66,7 @@ namespace pmd2mqo
         static public bool pmd2mqo(string pmdFile, string outFile, float scale = 1)
         {
             Regex ext_pmd = new Regex(@"\.pmd$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            string mqoFile = outFile; /*ext_pmd.Replace(pmdFile, ".mqo");
-            if (!ext_pmd.IsMatch(pmdFile)) mqoFile = pmdFile + ".mqo"; //return false;//error_NoPMD();*/
+            string mqoFile = outFile;
 
             MqoDocument mqo = new MqoDocument();
 
@@ -137,8 +81,8 @@ namespace pmd2mqo
                     string modelName = readMultibyte(pmd, 20);
                     string modelComment = readMultibyte(pmd, 256);
 
-                    Console.WriteLine("Model Name: " + modelName);
-                    Console.WriteLine("Comment: " + modelComment);
+                    //Console.WriteLine("Model Name: " + modelName);
+                    //Console.WriteLine("Comment: " + modelComment);
 
                     MqoObject mObj = mqo.mkObject(modelName);
 
@@ -244,9 +188,9 @@ namespace pmd2mqo
 
             using (TextWriter tw = new StreamWriter(mqoFile, false, sjis))
             {
-                Console.WriteLine("Write to " + mqoFile);
+                //Console.WriteLine("Write to " + mqoFile);
                 mqo.writeTo(tw);
-                Console.WriteLine("end.");
+                //Console.WriteLine("end.");
             }
             return true;
         }
@@ -273,7 +217,7 @@ namespace pmd2mqo
         public override string ToString()
         {
             string str = String.Format("\"{0}\" col({1,0:F} {2,0:F} {3,0:F} {4,0:F}) dif({5,0:F}) amb({6,0:F}) emi({7,0:F}) spc({8,0:F}) power({9,0:F})",
-                matName, r, g, b, a, dif, amb, emi, spc, power);
+                matName, r, g, b, a, dif, amb, emi, spc, power).Replace(",", ".");
         	string newtex = tex;
         	string[] tmptex;
         	string[] stringSeparators = new string[] {"*"};
@@ -299,7 +243,7 @@ namespace pmd2mqo
         }
         public override string ToString()
         {
-            return String.Format("{0,0:F} {1,0:F}", u, v);
+            return String.Format("{0,0:F} {1,0:F}", u, v).Replace(",", ".");
         }
     }
 
@@ -314,7 +258,7 @@ namespace pmd2mqo
         }
         public override string ToString()
         {
-            return String.Format("{0,0:F} {1,0:F} {2,0:F}", x, y, -z); // pmdとmqoはZ軸の向きが逆
+            return String.Format("{0,0:F} {1,0:F} {2,0:F}", x, y, -z).Replace(",", "."); // pmdとmqoはZ軸の向きが逆
         }
     }
 
@@ -331,7 +275,7 @@ namespace pmd2mqo
         }
         public override string ToString()
         {
-            return String.Format("3 V({0} {1} {2}) M({3}) UV({4} {5} {6})", vId[0], vId[1], vId[2], matId, uv[0], uv[1], uv[2]);
+            return String.Format("3 V({0} {1} {2}) M({3}) UV({4} {5} {6})", vId[0], vId[1], vId[2], matId, uv[0], uv[1], uv[2]).Replace(",", ".");
         }
     }
 
