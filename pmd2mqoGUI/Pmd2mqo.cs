@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Original source code link:
  * https://onedrive.live.com/?cid=9DA0FA00AC5A8258&id=9DA0FA00AC5A8258!337
  * 
@@ -20,7 +20,7 @@ namespace pmd2mqo
     {
         static Encoding sjis = Encoding.GetEncoding("Shift_JIS");
 
-        static public bool pmd2mqo_cui(string pmdFile, float scale)
+        /*static public bool pmd2mqo_cui(string pmdFile, float scale)
         {
         	Regex ext_pmd = new Regex(@"\.pmd$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             string mqoFile = ext_pmd.Replace(pmdFile, ".mqo");
@@ -35,7 +35,7 @@ namespace pmd2mqo
                 return false;
             }
             return true;
-        }
+        }*/
 
         static void error_NoPMD()
         {
@@ -63,12 +63,13 @@ namespace pmd2mqo
             return true;
 		}
 
-        static public bool pmd2mqo(string pmdFile, string outFile, float scale = 1)
+        static public bool pmd2mqo(string pmdFile, string outFile, float scale, out List<MqoMaterial> matList)
         {
             Regex ext_pmd = new Regex(@"\.pmd$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             string mqoFile = outFile;
 
             MqoDocument mqo = new MqoDocument();
+            matList = mqo.mat;
 
             using (FileStream pmdFs = new FileStream(pmdFile, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -192,6 +193,7 @@ namespace pmd2mqo
                 mqo.writeTo(tw);
                 //Console.WriteLine("end.");
             }
+            matList = mqo.mat;
             return true;
         }
     }
@@ -200,11 +202,11 @@ namespace pmd2mqo
     // mqo出力に必要な分だけの実装
     // 出力したmqoは必ずMetasequoiaで開いて保存し直すこと
 
-    class MqoMaterial
+    public class MqoMaterial
     {
         public float r, g, b, a;
         public float dif = 1.0f, amb = 0.6f, emi = 0.4f, spc = 0.0f, power = 5.0f;
-        public string matName, tex;
+        public string matName, tex, fixtex;
         public MqoMaterial(float r, float g, float b, float a)
         {
             this.r = r;
@@ -229,6 +231,7 @@ namespace pmd2mqo
             	}
                 str += " tex(\"" + newtex + "\")";
             }
+            fixtex = newtex;
             return str;
         }
     }
@@ -309,6 +312,7 @@ namespace pmd2mqo
     {
         public List<MqoMaterial> mat = new List<MqoMaterial>();
         public List<MqoObject> obj = new List<MqoObject>();
+        
         public void writeTo(TextWriter tw)
         {
             // ヘッダ

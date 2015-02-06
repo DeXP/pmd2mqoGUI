@@ -22,14 +22,14 @@ namespace pmd2mqoGUI {
 	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
 	[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	internal class Resources {
+	internal class strings_ru {
 		
 		private static global::System.Resources.ResourceManager resourceMan;
 		
 		private static global::System.Globalization.CultureInfo resourceCulture;
 		
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-		internal Resources() {
+		internal strings_ru() {
 		}
 		
 		/// <summary>
@@ -39,7 +39,7 @@ namespace pmd2mqoGUI {
 		internal static global::System.Resources.ResourceManager ResourceManager {
 			get {
 				if (object.ReferenceEquals(resourceMan, null)) {
-					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("pmd2mqoGUI.Resources", typeof(Resources).Assembly);
+					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("pmd2mqoGUI.strings.ru", typeof(strings_ru).Assembly);
 					resourceMan = temp;
 				}
 				return resourceMan;
@@ -61,42 +61,47 @@ namespace pmd2mqoGUI {
 		}
 		
 		/// <summary>
-		///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+		///   Ищет локализованную строку, похожую на Выбрать файл.
 		/// </summary>
-		internal static System.Drawing.Bitmap circleSM {
+		internal static string chooseFile {
 			get {
-				object obj = ResourceManager.GetObject("circleSM", resourceCulture);
-				return ((System.Drawing.Bitmap)(obj));
+				return ResourceManager.GetString("chooseFile", resourceCulture);
 			}
 		}
 		
 		/// <summary>
-		///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+		///   Ищет локализованную строку, похожую на Выполнить.
 		/// </summary>
-		internal static System.Drawing.Icon icon {
+		internal static string convert {
 			get {
-				object obj = ResourceManager.GetObject("icon", resourceCulture);
-				return ((System.Drawing.Icon)(obj));
+				return ResourceManager.GetString("convert", resourceCulture);
 			}
 		}
 		
 		/// <summary>
-		///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+		///   Ищет локализованную строку, похожую на Вход:.
 		/// </summary>
-		internal static System.Drawing.Bitmap iconPNG {
+		internal static string input {
 			get {
-				object obj = ResourceManager.GetObject("iconPNG", resourceCulture);
-				return ((System.Drawing.Bitmap)(obj));
+				return ResourceManager.GetString("input", resourceCulture);
 			}
 		}
 		
 		/// <summary>
-		///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+		///   Ищет локализованную строку, похожую на Выход:.
 		/// </summary>
-		internal static System.Drawing.Bitmap process {
+		internal static string output {
 			get {
-				object obj = ResourceManager.GetObject("process", resourceCulture);
-				return ((System.Drawing.Bitmap)(obj));
+				return ResourceManager.GetString("output", resourceCulture);
+			}
+		}
+		
+		/// <summary>
+		///   Ищет локализованную строку, похожую на Размер:.
+		/// </summary>
+		internal static string scale {
+			get {
+				return ResourceManager.GetString("scale", resourceCulture);
 			}
 		}
 	}

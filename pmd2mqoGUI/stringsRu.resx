@@ -117,22 +117,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="aboutText.Text" xml:space="preserve">
-    <value>             pmd2mqoGUI  v1.3
-             A simple .PMD to .MQO converter GUI
+  <data name="input" xml:space="preserve">
+    <value>Вход:</value>
+  </data>
+  <data name="output" xml:space="preserve">
+    <value>Выход:</value>
+  </data>
+  <data name="chooseFile" xml:space="preserve">
+    <value>Выбрать файл</value>
+  </data>
+  <data name="scale" xml:space="preserve">
+    <value>Размер:</value>
+  </data>
+  <data name="convert" xml:space="preserve">
+    <value>Выполнить</value>
+  </data>
+  <data name="fileInfo" xml:space="preserve">
+    <value>Информация о файле:</value>
+  </data>
+  <data name="inputHelp" xml:space="preserve">
+    <value>Пожалуйста, выберите PMD-файл</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Имя:</value>
+  </data>
+  <data name="comment" xml:space="preserve">
+    <value>Инфо:</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Ошибка!</value>
+  </data>
+  <data name="notPmdError" xml:space="preserve">
+    <value>Ошибка конвертирования:
+Файл не в формате PMD!</value>
+  </data>
+  <data name="doneCorrectly" xml:space="preserve">
+    <value>Выполнено успешно.
 
-Convertation code by:
-Kazumasa Honda
-https://onedrive.live.com/?cid=9DA0FA00AC5A8258&amp;id=9DA0FA00AC5A8258!337
+При копировании не забудьте
+скопировать и файлы текстур!</value>
+  </data>
+  <data name="texNotFound" xml:space="preserve">
+    <value>Некоторые текстуры не были найдены!
+Возможны ошибки при импорте такого файла.
 
-GUI code by:
-Dmitry Hrabrov a.k.a. DeXPeriX
-http://dexperix.net
-
-Beta tester:
-Ostin Zebaletta
-
-The program is made specifically for
-http://OneMangaDay.dexp.in/tutorials/</value>
+Список не найденных текстур:
+</value>
+  </data>
+  <data name="warning" xml:space="preserve">
+    <value>Предупреждение</value>
   </data>
 </root>

@@ -56,7 +56,7 @@ namespace pmd2mqoGUI
 			this.aboutText.Location = new System.Drawing.Point(12, 12);
 			this.aboutText.Name = "aboutText";
 			this.aboutText.ReadOnly = true;
-			this.aboutText.Size = new System.Drawing.Size(253, 200);
+			this.aboutText.Size = new System.Drawing.Size(253, 229);
 			this.aboutText.TabIndex = 0;
 			this.aboutText.TabStop = false;
 			this.aboutText.Text = resources.GetString("aboutText.Text");
@@ -65,7 +65,7 @@ namespace pmd2mqoGUI
 			// 
 			this.okButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.okButton.Location = new System.Drawing.Point(106, 218);
+			this.okButton.Location = new System.Drawing.Point(106, 247);
 			this.okButton.Name = "okButton";
 			this.okButton.Size = new System.Drawing.Size(75, 23);
 			this.okButton.TabIndex = 1;
@@ -87,7 +87,7 @@ namespace pmd2mqoGUI
 			this.AcceptButton = this.okButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(277, 253);
+			this.ClientSize = new System.Drawing.Size(277, 282);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.okButton);
 			this.Controls.Add(this.aboutText);

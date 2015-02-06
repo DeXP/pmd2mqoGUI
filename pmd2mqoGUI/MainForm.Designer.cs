@@ -22,12 +22,12 @@ namespace pmd2mqoGUI
 		private System.Windows.Forms.NumericUpDown scaleUpDown;
 		private System.Windows.Forms.PictureBox processIndicator;
 		private System.Windows.Forms.GroupBox infoBox;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label commentLabel;
 		private System.Windows.Forms.Label nameLabel;
 		private System.Windows.Forms.TextBox commentText;
 		private System.Windows.Forms.TextBox nameText;
 		private System.Windows.Forms.Label inputLabel;
-		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label outputLabel;
 		private System.Windows.Forms.TextBox outputEdit;
 		private System.Windows.Forms.SaveFileDialog saveDialog;
 		
@@ -60,12 +60,12 @@ namespace pmd2mqoGUI
 			this.scaleUpDown = new System.Windows.Forms.NumericUpDown();
 			this.processIndicator = new System.Windows.Forms.PictureBox();
 			this.infoBox = new System.Windows.Forms.GroupBox();
-			this.label1 = new System.Windows.Forms.Label();
+			this.commentLabel = new System.Windows.Forms.Label();
 			this.nameLabel = new System.Windows.Forms.Label();
 			this.commentText = new System.Windows.Forms.TextBox();
 			this.nameText = new System.Windows.Forms.TextBox();
 			this.inputLabel = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
+			this.outputLabel = new System.Windows.Forms.Label();
 			this.outputEdit = new System.Windows.Forms.TextBox();
 			this.saveDialog = new System.Windows.Forms.SaveFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.scaleUpDown)).BeginInit();
@@ -111,11 +111,14 @@ namespace pmd2mqoGUI
 			// 
 			this.convertButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.convertButton.Enabled = false;
+			this.convertButton.Image = global::pmd2mqoGUI.Resources.circleSM;
+			this.convertButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.convertButton.Location = new System.Drawing.Point(292, 64);
 			this.convertButton.Name = "convertButton";
 			this.convertButton.Size = new System.Drawing.Size(92, 25);
 			this.convertButton.TabIndex = 4;
-			this.convertButton.Text = "Convert";
+			this.convertButton.Text = "Convert     ";
+			this.convertButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.convertButton.UseVisualStyleBackColor = true;
 			this.convertButton.Click += new System.EventHandler(this.ConvertButtonClick);
 			// 
@@ -159,7 +162,7 @@ namespace pmd2mqoGUI
 			this.infoBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.infoBox.Controls.Add(this.label1);
+			this.infoBox.Controls.Add(this.commentLabel);
 			this.infoBox.Controls.Add(this.nameLabel);
 			this.infoBox.Controls.Add(this.commentText);
 			this.infoBox.Controls.Add(this.nameText);
@@ -171,13 +174,13 @@ namespace pmd2mqoGUI
 			this.infoBox.TabStop = false;
 			this.infoBox.Text = "File info:";
 			// 
-			// label1
+			// commentLabel
 			// 
-			this.label1.Location = new System.Drawing.Point(6, 45);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(54, 15);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "Comment:";
+			this.commentLabel.Location = new System.Drawing.Point(6, 45);
+			this.commentLabel.Name = "commentLabel";
+			this.commentLabel.Size = new System.Drawing.Size(54, 15);
+			this.commentLabel.TabIndex = 3;
+			this.commentLabel.Text = "Comment:";
 			// 
 			// nameLabel
 			// 
@@ -195,6 +198,7 @@ namespace pmd2mqoGUI
 			this.commentText.Location = new System.Drawing.Point(66, 45);
 			this.commentText.Multiline = true;
 			this.commentText.Name = "commentText";
+			this.commentText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.commentText.Size = new System.Drawing.Size(297, 85);
 			this.commentText.TabIndex = 1;
 			// 
@@ -202,7 +206,7 @@ namespace pmd2mqoGUI
 			// 
 			this.nameText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.nameText.Location = new System.Drawing.Point(68, 19);
+			this.nameText.Location = new System.Drawing.Point(66, 19);
 			this.nameText.Name = "nameText";
 			this.nameText.Size = new System.Drawing.Size(297, 20);
 			this.nameText.TabIndex = 0;
@@ -215,13 +219,13 @@ namespace pmd2mqoGUI
 			this.inputLabel.TabIndex = 8;
 			this.inputLabel.Text = "Input:";
 			// 
-			// label2
+			// outputLabel
 			// 
-			this.label2.Location = new System.Drawing.Point(12, 40);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(42, 18);
-			this.label2.TabIndex = 10;
-			this.label2.Text = "Output:";
+			this.outputLabel.Location = new System.Drawing.Point(12, 40);
+			this.outputLabel.Name = "outputLabel";
+			this.outputLabel.Size = new System.Drawing.Size(42, 18);
+			this.outputLabel.TabIndex = 10;
+			this.outputLabel.Text = "Output:";
 			// 
 			// outputEdit
 			// 
@@ -239,7 +243,7 @@ namespace pmd2mqoGUI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(392, 243);
-			this.Controls.Add(this.label2);
+			this.Controls.Add(this.outputLabel);
 			this.Controls.Add(this.outputEdit);
 			this.Controls.Add(this.inputLabel);
 			this.Controls.Add(this.infoBox);
