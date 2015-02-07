@@ -145,20 +145,22 @@ namespace pmd2mqoGUI
 		}
 		
 		void backgroundWorker_DoWork(object sender, EventArgs e){
-			int badCnt = 0;
+			var hashNames = new HashSet<string>();
 			String badNames = "";
 			try
             {
 				if( pmd2mqo.Pmd2mqo.pmd2mqo(fileEdit.Text, outputEdit.Text, (float)scaleUpDown.Value, out Materials) ){
 					for(int i=0; i<Materials.Count; i++){
 						if( (Materials[i].fixtex != "") &&  !File.Exists( Path.Combine(Path.GetDirectoryName(fileEdit.Text), Materials[i].fixtex) ) ){
-							if( badCnt > 0 ) badNames += "\r";
-							badCnt++;
-							badNames += Materials[i].fixtex;
+							hashNames.Add(Materials[i].fixtex);
+							//badNames += Materials[i].fixtex;
 						}
 					}
 					
-					if( badCnt == 0 ) MessageBox.Show(doneCorrectly, "Ok", MessageBoxButtons.OK ,MessageBoxIcon.Information);
+					foreach (var str in hashNames)
+						badNames += str + "\n";
+					
+					if( hashNames.Count ==0 ) MessageBox.Show(doneCorrectly, "Ok", MessageBoxButtons.OK ,MessageBoxIcon.Information);
 					else MessageBox.Show(texNotFound+badNames, warningStr, MessageBoxButtons.OK ,MessageBoxIcon.Warning);
 					
 				}

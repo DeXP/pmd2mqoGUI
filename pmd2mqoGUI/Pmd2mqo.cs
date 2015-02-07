@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace pmd2mqo
 {
@@ -79,6 +80,7 @@ namespace pmd2mqo
 
                     if (readMultibyte(pmd, 3) != "Pmd") return false;// error_NoPMD();
                     float pmdVer = pmd.ReadSingle();
+                    Debug.WriteLine("PMD version: "+pmdVer.ToString("0.0000"));
                     string modelName = readMultibyte(pmd, 20);
                     string modelComment = readMultibyte(pmd, 256);
 
@@ -87,24 +89,24 @@ namespace pmd2mqo
 
                     MqoObject mObj = mqo.mkObject(modelName);
 
-                    // 頂点
+                    // 頂点 // Vertex
                     uint count = pmd.ReadUInt32();
                     for (int i = 0; i < count; i++)
                     {
                         mObj.vertex.Add(new MqoVertex(pmd.ReadSingle() * scale, pmd.ReadSingle() * scale, pmd.ReadSingle() * scale));
-                        pmd.ReadBytes(12); // 頂点法線を読み飛ばし
+                        pmd.ReadBytes(12); // 頂点法線を読み飛ばし // And skip the vertex normals
                         mObj.uv.Add(new MqoUV(pmd.ReadSingle(), pmd.ReadSingle()));
-                        pmd.ReadBytes(2 + 2 + 1 + 1); // ボーン情報を読み飛ばし
+                        pmd.ReadBytes(2 + 2 + 1 + 1); // ボーン情報を読み飛ばし // And skip the bone information
                     }
 
-                    // 面
+                    // 面 // Surface
                     count = pmd.ReadUInt32() / 3;
                     for (int i = 0; i < count; i++)
                     {
                         mObj.face.Add(new MqoFace3(pmd.ReadUInt16(), pmd.ReadUInt16(), pmd.ReadUInt16(), mObj.uv));
                     }
 
-                    // 材質
+                    // 材質 // Material
                     count = pmd.ReadUInt32();
                     int foffset = 0;
                     for (int i = 0; i < count; i++)
@@ -115,9 +117,9 @@ namespace pmd2mqo
                         mat.power = pmd.ReadSingle();
                         mat.spc = (pmd.ReadSingle() + pmd.ReadSingle() + pmd.ReadSingle()) / 3;
                         mat.amb = (pmd.ReadSingle() + pmd.ReadSingle() + pmd.ReadSingle()) / 3;
-                        pmd.ReadBytes(2); // toon, edge読み飛ばし
+                        pmd.ReadBytes(2); // toon, edge skip
 
-                        int fcount = (int)(pmd.ReadUInt32() / 3); // 適用面数
+                        int fcount = (int)(pmd.ReadUInt32() / 3); // 適用面数 // Applicable Sides
                         for (int j = 0; j < fcount; j++)
                         {
                             mObj.face[j + foffset].matId = i;
@@ -127,11 +129,11 @@ namespace pmd2mqo
                         mat.tex = readMultibyte(pmd, 20);
                     }
 
-                    // ボーンは飛ばす
+                    // ボーンは飛ばす // Bone skip
                     count = pmd.ReadUInt16();
                     pmd.ReadBytes((int)count * (20 + 2 + 2 + 1 + 2 + 12));
 
-                    // IKは飛ばす
+                    // IKは飛ばす // IK skip
                     count = pmd.ReadUInt16();
                     for (int i = 0; i < count; i++)
                     {
@@ -141,15 +143,18 @@ namespace pmd2mqo
                     }
 
                     // Skin
-                    count = pmd.ReadUInt16();
+                    /*count = pmd.ReadUInt16();
+                    Debug.WriteLine("Skin Count = "+count);
                     MqoObject sbase = null;
                     int[] sbaseIdx = null;
                     for (int i = 0; i < count; i++)
                     {
+                    	Debug.WriteLine("== Skin "+i);
                         MqoObject so = mqo.mkObject(readMultibyte(pmd, 20));
                         uint vcount = pmd.ReadUInt32();
+                        Debug.WriteLine("Vcount = "+vcount);
                         pmd.ReadByte();
-                        if (i == 0)
+                        if (i == 0) // if first skin
                         {
                             sbase = so;
                             mObj.vertex.ForEach(v => sbase.vertex.Add(v));
@@ -181,7 +186,8 @@ namespace pmd2mqo
                             }
                             sbase.face.FindAll(f => f.vId.Any(d => dvertex.Contains(d))).ForEach(f => so.face.Add(f));
                         }
-                    }
+                        Debug.WriteLine("SO vertex count = " + so.vertex.Count);
+                    }*/
 
                     //Console.WriteLine("Parse end: " + pmdFile);
                 }
@@ -261,6 +267,7 @@ namespace pmd2mqo
         }
         public override string ToString()
         {
+        	//pmd and mqo reverse the direction of the Z axis
             return String.Format("{0,0:F} {1,0:F} {2,0:F}", x, y, -z).Replace(",", "."); // pmdとmqoはZ軸の向きが逆
         }
     }
@@ -315,21 +322,23 @@ namespace pmd2mqo
         
         public void writeTo(TextWriter tw)
         {
-            // ヘッダ
+            // ヘッダ // Header
             tw.WriteLine("Metasequoia Document");
             tw.WriteLine("Format Text Ver 1.0");
 
             // 視点情報の書き出しなどは行わない
+            // Is not carried out, such as the writing of viewpoint information
 
-            // 材質の書き出し
+            // 材質の書き出し // Export Material
             tw.WriteLine("Material " + mat.Count + " {");
             mat.ForEach(m => tw.WriteLine("\t" + m.ToString()));
             tw.WriteLine("}");
 
-            // オブジェクトの書き出し
+            // オブジェクトの書き出し // Export object
+            Debug.WriteLine("Objects count: " + obj.Count);
             obj.ForEach(o => o.writeTo(tw));
 
-            // フッタ
+            // フッタ // Footer
             tw.WriteLine("Eof");
         }
         public MqoObject mkObject(string objName)
