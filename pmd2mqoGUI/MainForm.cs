@@ -151,7 +151,7 @@ namespace pmd2mqoGUI
             {
 				if( pmd2mqo.Pmd2mqo.pmd2mqo(fileEdit.Text, outputEdit.Text, (float)scaleUpDown.Value, out Materials) ){
 					for(int i=0; i<Materials.Count; i++){
-						if( !File.Exists( Path.Combine(Path.GetDirectoryName(fileEdit.Text), Materials[i].fixtex) ) ){
+						if( (Materials[i].fixtex != "") &&  !File.Exists( Path.Combine(Path.GetDirectoryName(fileEdit.Text), Materials[i].fixtex) ) ){
 							if( badCnt > 0 ) badNames += "\r";
 							badCnt++;
 							badNames += Materials[i].fixtex;
